@@ -1,7 +1,7 @@
 [project]
 name = "ggps"
 license = {file = "LICENSE"}
-version = "0.4.1"
+version = "0.4.2"
 authors = [
   {name = "Chris Joakim", email = "christopher.joakim@gmail.com" }
 ]
