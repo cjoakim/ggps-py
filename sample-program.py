@@ -66,3 +66,27 @@ if __name__ == "__main__":
             print(repr(t))
         count = len(trackpoints)
         print("{} trackpoints loaded from file {}".format(count, infile))
+
+    if True:
+        infile = "data/activity_17075053124_lorimer_avinger.tcx"
+        print("")
+        print("processing file {} with ggps.TcxHandler() ...".format(infile))
+        handler = ggps.TcxHandler()
+        handler.parse(infile)
+        trackpoints = handler.trackpoints
+        for t in trackpoints:
+            print(repr(t))
+        count = len(trackpoints)
+        print("{} trackpoints loaded from file {}".format(count, infile))
+
+    if True:
+        infile = "data/activity_17075053124_lorimer_avinger.gpx"
+        print("==========")
+        print("processing file {} with ggps.GpxHandler() ...".format(infile))
+        handler = ggps.GpxHandler()
+        handler.parse(infile)
+        trackpoints = handler.trackpoints
+        for t in trackpoints:
+            print(repr(t))
+        count = len(trackpoints)
+        print("{} trackpoints loaded from file {}".format(count, infile))
