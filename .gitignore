@@ -17,6 +17,7 @@
 **/.vscode/
 **/__MACOSX/
 
+data/*.json
 
 # GitHub generated entries for Python project below
 
