@@ -47,9 +47,12 @@ class TcxHandler(BaseHandler):
                     retain = False
                 elif tag_name.endswith("RunCadence"):
                     tag_name = "cadence"
-
                 if retain:
                     self.curr_tkpt.set(tag_name, self.curr_text)
+        elif path == "TrainingCenterDatabase|Activities|Activity|Creator|Name":
+            self.device_name = self.curr_text
+        elif path == "TrainingCenterDatabase|Activities|Activity|Creator|UnitId":
+            self.device_id = self.curr_text
 
         self.heirarchy.pop()
         self.reset_curr_text()

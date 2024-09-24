@@ -2,10 +2,14 @@
 
 ## Roadmap
 
+
 - Extract device info
   - Present in TCX only
   - Name and UnitId tags --> DeviceName, DeviceID
 
+- Enhance Unit Tests
+  - 100% coverage
+  
 - Optional Summary Stats
   - Cadence Histogram, Average, Max
   - Heartbeat Histogram, Average, Max

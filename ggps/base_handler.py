@@ -26,6 +26,8 @@ class BaseHandler(xml.sax.ContentHandler):
         self.first_time_secs_to_midnight = 0
         self.path_counter = defaultdict(int)
         self.version = VERSION
+        self.device_name = None
+        self.device_id = None
 
     def __str__(self):
         return "<ggps.BaseHandler type :{} filename: {}>".format(
@@ -45,6 +47,9 @@ class BaseHandler(xml.sax.ContentHandler):
         if self.handler_type == "path":
             data["path_counter"] = self.path_counter
         else:
+            if self.handler_type == "tcx":
+                data["device_name"] = self.device_name
+                data["device_id"] = self.device_id
             data["trackpoint_count"] = self.trackpoint_count()
             data["trackpoints"] = list()
             for t in self.trackpoints:
