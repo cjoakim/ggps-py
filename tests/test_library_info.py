@@ -6,4 +6,4 @@ def test_author():
 
 
 def test_version():
-    assert ggps.VERSION == "0.4.2"
+    assert ggps.VERSION == "0.5.0"

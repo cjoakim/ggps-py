@@ -1,14 +1,21 @@
+import json
 import xml.sax
+
+from collections import defaultdict
+from datetime import datetime
 
 import m26
 
 from ggps.trackpoint import Trackpoint
+from ggps import VERSION
 
 
 class BaseHandler(xml.sax.ContentHandler):
 
     def __init__(self):
         xml.sax.ContentHandler.__init__(self)
+        self.filename = None
+        self.handler_type = None
         self.heirarchy = list()
         self.trackpoints = list()
         self.curr_tkpt = Trackpoint()
@@ -17,6 +24,32 @@ class BaseHandler(xml.sax.ContentHandler):
         self.first_time = None
         self.first_etime = None
         self.first_time_secs_to_midnight = 0
+        self.path_counter = defaultdict(int)
+        self.version = VERSION
+
+    def __str__(self):
+        return "<ggps.BaseHandler type :{} filename: {}>".format(
+            self.handler_type, self.filename
+        )
+
+    def __repr__(self):
+        return json.dumps(self.get_data(), sort_keys=False, indent=2)
+
+    def get_data(self) -> dict:
+        """Return a JSON serializable dictionary of the data in this handler."""
+        data = dict()
+        data["filename"] = self.filename
+        data["ggps_version"] = self.version
+        data["ggps_parsed_at"] = str(datetime.now())
+
+        if self.handler_type == "path":
+            data["path_counter"] = self.path_counter
+        else:
+            data["trackpoint_count"] = self.trackpoint_count()
+            data["trackpoints"] = list()
+            for t in self.trackpoints:
+                data["trackpoints"].append(t.values)
+        return data
 
     def endDocument(self):
         self.completed = True
@@ -48,16 +81,6 @@ class BaseHandler(xml.sax.ContentHandler):
         # deal with the possibility that the Activity spans two calendar days.
         secs = int(m26.Constants.seconds_per_hour() * 24)
         self.first_time_secs_to_midnight = secs - self.first_time_secs
-        if False:
-            print("first_time:   {0}".format(self.first_time))
-            print("first_hhmmss: {0}".format(self.first_hhmmss))
-            print("first_etime:  {0}".format(self.first_etime))
-            print("first_time_secs: {0}".format(self.first_time_secs))
-            print(
-                "first_time_secs_to_midnight: {0} {1}".format(
-                    self.first_time_secs_to_midnight, secs
-                )
-            )
 
     def meters_to_feet(self, t, meters_key, new_key):
         m = t.get(meters_key)
@@ -110,3 +133,17 @@ class BaseHandler(xml.sax.ContentHandler):
                 return ""
         else:
             return ""
+
+    def write_json_file(self, pretty=True, verbose=True) -> None:
+        """Write the parsed handler data to a file in the same directory, with a .json filetype."""
+        outfile = "{}.{}.json".format(self.filename.strip(), self.handler_type)
+        jstr = None
+        if pretty is True:
+            jstr = json.dumps(self.get_data(), sort_keys=False, indent=2)
+        else:
+            jstr = json.dumps(self.get_data())
+
+        with open(file=outfile, encoding="utf-8", mode="w") as file:
+            file.write(jstr)
+            if verbose is True:
+                print(f"file written: {outfile}")

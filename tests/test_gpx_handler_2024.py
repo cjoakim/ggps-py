@@ -2,15 +2,19 @@ import ggps
 
 import pytest
 
+# pytest -v tests/test_gpx_handler_2024.py
+
 
 def expected_first_trackpoint():
     return {
+        "cadence": "0",
         "elapsedtime": "00:00:00",
-        "heartratebpm": "85",
-        "latitudedegrees": "44.97431952506304",
-        "longitudedegrees": "-93.26310088858008",
+        "heartratebpm": "68",
+        "latitudedegrees": "35.4942742176353931427001953125",
+        "longitudedegrees": "-80.83952489309012889862060546875",
         "seq": "1",
-        "time": "2014-10-05T13:07:53.000Z",
+        "time": "2024-09-19T11:05:15.000Z",
+        "trackpointextension": "",
         "type": "Trackpoint",
     }
 
@@ -29,17 +33,20 @@ def expected_middle_trackpoint():
 
 def expected_last_trackpoint():
     return {
-        "elapsedtime": "04:14:24",
-        "heartratebpm": "161",
-        "latitudedegrees": "44.95180849917233",
-        "longitudedegrees": "-93.10493202880025",
-        "seq": "2256",
-        "time": "2014-10-05T17:22:17.000Z",
+        "cadence": "90",
+        "cadencex2": "180",
+        "elapsedtime": "00:46:17",
+        "heartratebpm": "145",
+        "latitudedegrees": "35.49437488429248332977294921875",
+        "longitudedegrees": "-80.84005312062799930572509765625",
+        "seq": "2778",
+        "time": "2024-09-19T11:51:32.000Z",
+        "trackpointextension": "",
         "type": "Trackpoint",
     }
 
 
-@pytest.mark.skip(reason="Temporarily disabled; refactoring to new/2024 data file")
+# @pytest.mark.skip(reason="Temporarily disabled; refactoring to new/2024 data file")
 def test_lorimer_avinger_gpx_file():
     filename = "data/activity_17075053124_lorimer_avinger.gpx"
     handler = ggps.GpxHandler()

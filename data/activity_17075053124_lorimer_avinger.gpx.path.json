@@ -1,0 +1,33 @@
+{
+  "filename": "data/activity_17075053124_lorimer_avinger.gpx",
+  "ggps_version": "0.5.0",
+  "ggps_parsed_at": "2024-09-24 07:17:25.700775",
+  "path_counter": {
+    "gpx": 1,
+    "gpx@creator": 1,
+    "gpx@version": 1,
+    "gpx@xsi:schemaLocation": 1,
+    "gpx@xmlns:ns3": 1,
+    "gpx@xmlns": 1,
+    "gpx@xmlns:xsi": 1,
+    "gpx@xmlns:ns2": 1,
+    "gpx|metadata": 1,
+    "gpx|metadata|link": 1,
+    "gpx|metadata|link@href": 1,
+    "gpx|metadata|link|text": 1,
+    "gpx|metadata|time": 1,
+    "gpx|trk": 1,
+    "gpx|trk|name": 1,
+    "gpx|trk|type": 1,
+    "gpx|trk|trkseg": 1,
+    "gpx|trk|trkseg|trkpt": 2778,
+    "gpx|trk|trkseg|trkpt@lat": 2778,
+    "gpx|trk|trkseg|trkpt@lon": 2778,
+    "gpx|trk|trkseg|trkpt|ele": 2778,
+    "gpx|trk|trkseg|trkpt|time": 2778,
+    "gpx|trk|trkseg|trkpt|extensions": 2778,
+    "gpx|trk|trkseg|trkpt|extensions|ns3:TrackPointExtension": 2778,
+    "gpx|trk|trkseg|trkpt|extensions|ns3:TrackPointExtension|ns3:hr": 2778,
+    "gpx|trk|trkseg|trkpt|extensions|ns3:TrackPointExtension|ns3:cad": 2778
+  }
+}

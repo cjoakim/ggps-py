@@ -1,14 +1,14 @@
 [project]
 name = "ggps"
 license = {file = "LICENSE"}
-version = "0.4.2"
+version = "0.5.0"
 authors = [
   {name = "Chris Joakim", email = "christopher.joakim@gmail.com" }
 ]
 maintainers = [
   {name = "Chris Joakim", email = "christopher.joakim@gmail.com" }
 ]
-description = "ggps - gps file parsing utilities for garmin connect and garmin devices"
+description = "ggps - tcx and gpx file parsing for garmin connect and garmin devices"
 keywords = ["parse", "garmin", "gpx", "tcx", "gps", "files", "running"]
 readme = "README.md"
 requires-python = ">=3.12"

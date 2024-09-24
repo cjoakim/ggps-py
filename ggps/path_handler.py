@@ -1,20 +1,19 @@
 import json
 import xml.sax
 
-from collections import defaultdict
-
 from ggps.base_handler import BaseHandler
 
 
 class PathHandler(BaseHandler):
 
     def parse(self, filename):
+        self.filename = filename
+        self.handler_type = "path"
         xml.sax.parse(open(filename), self)
         return self
 
     def __init__(self):
         BaseHandler.__init__(self)
-        self.path_counter = defaultdict(int)
 
     def startElement(self, name, attrs):
         self.heirarchy.append(name)

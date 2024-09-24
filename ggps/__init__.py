@@ -3,7 +3,7 @@ ggps library
 """
 
 __author__ = "Chris Joakim <christopher.joakim@gmail.com>"
-__version__ = "0.4.2"
+__version__ = "0.5.0"
 
 AUTHOR = __author__
 VERSION = __version__
