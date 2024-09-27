@@ -53,6 +53,7 @@ class BaseHandler(xml.sax.ContentHandler):
             data["trackpoint_count"] = self.trackpoint_count()
             data["trackpoints"] = list()
             for t in self.trackpoints:
+                t.post_parse()
                 data["trackpoints"].append(t.values)
         return data
 
