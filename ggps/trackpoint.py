@@ -9,6 +9,8 @@ are strings during the XML parsing process.  But the post_parse()
 method transforms the string values into the appropriate datatypes -
 such as int, float, or str.
 """
+
+
 class Trackpoint(object):
 
     def __init__(self):
@@ -35,9 +37,9 @@ class Trackpoint(object):
 
     def __repr__(self):
         return json.dumps(self.values, sort_keys=True, indent=2)
-    
+
     def post_parse(self):
-        """ Convert the XML-parsed strings into the appropriate datatypes. """
+        """Convert the XML-parsed strings into the appropriate datatypes."""
         self.to_int("seq")
         self.to_int("cadence")
         self.to_int("cadencex2")
@@ -55,7 +57,7 @@ class Trackpoint(object):
     def to_int(self, key):
         try:
             if key in self.values.keys():
-                self.values[key] = int(self.values[key])  
+                self.values[key] = int(self.values[key])
         except:
             self.values[key] = 0
             print("Error converting {0} {} to int".format(key), self.values[key])
@@ -63,16 +65,19 @@ class Trackpoint(object):
     def to_float(self, key):
         try:
             if key in self.values.keys():
-                self.values[key] = float(self.values[key])  
+                self.values[key] = float(self.values[key])
         except:
             self.values[key] = 0.0
-            print("ggps.Trackpoint - error converting {} {} to int".format(
-                key, self.values[key]))
-            
+            print(
+                "ggps.Trackpoint - error converting {} {} to int".format(
+                    key, self.values[key]
+                )
+            )
+
     def calculate_elapsedseconds(self):
         try:
-            if 'elapsedtime' in self.values.keys():
-                et = ElapsedTime(self.values['elapsedtime'])
-                self.values['elapsedseconds'] = et.secs
+            if "elapsedtime" in self.values.keys():
+                et = ElapsedTime(self.values["elapsedtime"])
+                self.values["elapsedseconds"] = et.secs
         except Exception as e:
             print(e)
