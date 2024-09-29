@@ -36,7 +36,6 @@ def expected_last_trackpoint():
     }
 
 
-# @pytest.mark.skip(reason="Temporarily disabled; refactoring to new/2024 data file")
 def test_lorimer_avinger_gpx_file():
     expected_trackpoint_count = 2778
     filename = "data/activity_17075053124_lorimer_avinger.gpx"
@@ -44,7 +43,7 @@ def test_lorimer_avinger_gpx_file():
     handler = ggps.GpxHandler(options)
     handler.parse(filename)
 
-    helper = UnitTestHelper(handler.get_data())
+    helper = UnitTestHelper(handler)
     helper.assert_filename(filename)
     helper.assert_ggps_version()
     helper.assert_ggps_parsed_at()
@@ -52,3 +51,4 @@ def test_lorimer_avinger_gpx_file():
     helper.assert_trackpoint_count(expected_trackpoint_count)
     helper.assert_first_trackpoint(expected_first_trackpoint())
     helper.assert_last_trackpoint(expected_last_trackpoint())
+    helper.assert_str()

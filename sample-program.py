@@ -1,3 +1,5 @@
+import json
+
 import ggps
 
 # Use:
@@ -15,8 +17,23 @@ def parse_file(infile, handler_type):
         handler = ggps.PathHandler()
 
     handler.parse(infile)
-    # print(repr(handler))
-    handler.write_json_file()
+    # print(str(handler))
+    write_json_file(handler)
+
+
+def write_json_file(handler, pretty=True, verbose=True) -> None:
+    """Write the parsed handler data to a file in the same directory, with a .json filetype."""
+    outfile = "{}.{}.json".format(handler.filename.strip(), handler.handler_type)
+    jstr = None
+    if pretty is True:
+        jstr = json.dumps(handler.get_data(), sort_keys=False, indent=2)
+    else:
+        jstr = json.dumps(handler.get_data())
+
+    with open(file=outfile, encoding="utf-8", mode="w") as file:
+        file.write(jstr)
+        if verbose is True:
+            print(f"file written: {outfile}")
 
 
 if __name__ == "__main__":

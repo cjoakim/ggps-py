@@ -51,7 +51,7 @@ def test_twin_cities_marathon_gpx_file():
     handler = ggps.GpxHandler(options)
     handler.parse(filename)
 
-    helper = UnitTestHelper(handler.get_data())
+    helper = UnitTestHelper(handler)
     helper.assert_filename(filename)
     helper.assert_ggps_version()
     helper.assert_ggps_parsed_at()
@@ -60,3 +60,4 @@ def test_twin_cities_marathon_gpx_file():
     helper.assert_first_trackpoint(expected_first_trackpoint())
     helper.assert_last_trackpoint(expected_last_trackpoint())
     helper.assert_trackpoint_at_index(expected_trackpoint_1200(), 1199)
+    helper.assert_str()

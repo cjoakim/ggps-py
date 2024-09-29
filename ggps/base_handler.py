@@ -30,11 +30,6 @@ class BaseHandler(xml.sax.ContentHandler):
         self.device_id = None
 
     def __str__(self):
-        return "<ggps.BaseHandler type :{} filename: {}>".format(
-            self.handler_type, self.filename
-        )
-
-    def __repr__(self):
         return json.dumps(self.get_data(), sort_keys=False, indent=2)
 
     def get_data(self) -> dict:
@@ -140,17 +135,3 @@ class BaseHandler(xml.sax.ContentHandler):
                 return ""
         else:
             return ""
-
-    def write_json_file(self, pretty=True, verbose=True) -> None:
-        """Write the parsed handler data to a file in the same directory, with a .json filetype."""
-        outfile = "{}.{}.json".format(self.filename.strip(), self.handler_type)
-        jstr = None
-        if pretty is True:
-            jstr = json.dumps(self.get_data(), sort_keys=False, indent=2)
-        else:
-            jstr = json.dumps(self.get_data())
-
-        with open(file=outfile, encoding="utf-8", mode="w") as file:
-            file.write(jstr)
-            if verbose is True:
-                print(f"file written: {outfile}")

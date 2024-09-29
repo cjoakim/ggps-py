@@ -29,5 +29,5 @@ class PathHandler(BaseHandler):
     def curr_path(self):
         return "|".join(self.heirarchy)
 
-    def __str__(self):
-        return json.dumps(self.path_counter, sort_keys=True, indent=2)
+    # def __str__(self):
+    #     return json.dumps(self.path_counter, sort_keys=True, indent=2)

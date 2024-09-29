@@ -4,40 +4,23 @@ import ggps
 
 import pytest
 
+from tests.helpers.unit_test_helper import UnitTestHelper
 
-@pytest.mark.skip(reason="Temporarily disabled; refactoring to new/2024 data file")
-def test_str():
-    handler = ggps.PathHandler()
-    actual = str(handler)
-    expected = "{}"
-    assert actual == expected
+# pytest -v tests/test_path_handler_2024.py
 
+
+def test_twin_cities_marathon_gpx():
+    expected_trackpoint_count = 2256
     filename = "data/twin_cities_marathon.gpx"
     handler = ggps.PathHandler()
     handler.parse(filename)
-    obj = json.loads(str(handler))
-    cnt = obj["gpx|trk|trkseg|trkpt@lat"]
-    assert cnt == 2256
 
+    helper = UnitTestHelper(handler)
+    helper.assert_filename(filename)
+    helper.assert_ggps_version()
+    helper.assert_ggps_parsed_at()
 
-@pytest.mark.skip(reason="Temporarily disabled; refactoring to new/2024 data file")
-def test_counts():
-    filename = "data/twin_cities_marathon.gpx"
-    handler = ggps.PathHandler()
-    handler.parse(filename)
-    counter = handler.path_counter
-    cnt = counter["gpx|trk|trkseg|trkpt@lat"]
-    assert cnt == 2256
-    cnt = counter["gpx|metadata|time"]
-    assert cnt == 1
-
-
-@pytest.mark.skip(reason="Temporarily disabled; refactoring to new/2024 data file")
-def test_base_parse_hhmmss():
-    filename = "data/twin_cities_marathon.gpx"
-    handler = ggps.PathHandler()
-    handler.parse(filename)
-    hhmmss = handler.parse_hhmmss("")
-    assert hhmmss == ""
-    hhmmss = handler.parse_hhmmss("xxx")
-    assert hhmmss == ""
+    counter = handler.get_data()["path_counter"]
+    assert counter["gpx|trk|trkseg|trkpt@lat"] == expected_trackpoint_count
+    assert counter["gpx|metadata|time"] == 1
+    helper.assert_str()

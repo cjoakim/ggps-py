@@ -5,11 +5,9 @@ import ggps
 
 class UnitTestHelper(object):
 
-    def __init__(self, parsed_data: dict):
-        self.data = parsed_data
-
-    def hey(self):
-        print("hey!")
+    def __init__(self, handler):
+        self.handler = handler
+        self.data = handler.get_data()
 
     def assert_filename(self, expected):
         actual = self.data["filename"]
@@ -44,6 +42,7 @@ class UnitTestHelper(object):
             "assert_trackpoint_count; actual {}, expected: {}".format(actual, expected)
         )
         assert actual == expected
+        assert actual == self.data["trackpoint_count"]
 
         last_seq = self.data["trackpoints"][-1]["seq"]
         assert last_seq == len(self.data["trackpoints"])
@@ -74,3 +73,8 @@ class UnitTestHelper(object):
             )
         )
         assert actual == expected
+
+    def assert_str(self):
+        s = str(self.handler)
+        f = self.handler.filename.strip().lower()
+        assert f in s
