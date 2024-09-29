@@ -2,50 +2,64 @@ import ggps
 
 import pytest
 
+from tests.helpers.unit_test_helper import UnitTestHelper
+
+# pytest -v tests/test_tcx_handler_2024.py
 
 def expected_first_trackpoint():
     return {
+      "type": "Trackpoint",
+      "time": "2024-09-19T11:05:15.000Z",
+      "latitudedegrees": 35.49427421763539,
+      "longitudedegrees": -80.83952489309013,
+      "altitudemeters": 249.1999969482422,
+      "distancemeters": 0.8799999952316284,
+      "heartratebpm": 68,
+      "speed": 0.0,
+      "cadence": 0,
+      "watts": "0",
+      "altitudefeet": 817.5852918249416,
+      "distancemiles": 0.0005468066462059252,
+      "distancekilometers": 0.0008799999952316285,
+      "elapsedtime": "00:00:00",
+      "seq": 1,
+      "elapsedseconds": 0.0
     }
 
 
 def expected_last_trackpoint():
     return {
+      "type": "Trackpoint",
+      "time": "2024-09-19T11:51:32.000Z",
+      "latitudedegrees": 35.49437488429248,
+      "longitudedegrees": -80.840053120628,
+      "altitudemeters": 244.1999969482422,
+      "distancemeters": 8045.7001953125,
+      "heartratebpm": 145,
+      "speed": 3.171999931335449,
+      "cadence": 90,
+      "watts": "192",
+      "altitudefeet": 801.1810923498758,
+      "distancemiles": 4.9993663227454785,
+      "distancekilometers": 8.0457001953125,
+      "cadencex2": 180,
+      "elapsedtime": "00:46:17",
+      "seq": 2782,
+      "elapsedseconds": 2777.0
     }
 
-
-@pytest.mark.skip(reason="Temporarily disabled; refactoring to new/2024 data file")
 def test_lorimer_avinger_tcx_file():
+    expected_trackpoint_count = 2782
     filename = "data/activity_17075053124_lorimer_avinger.tcx"
-    handler = ggps.TcxHandler()
+    options = dict()
+    handler = ggps.TcxHandler(options)
     handler.parse(filename)
 
-    data = handler.get_data()
-    tkpts = data["trackpoints"]
+    helper = UnitTestHelper(handler.get_data())
+    helper.assert_filename(filename)
+    helper.assert_ggps_version()
+    helper.assert_ggps_parsed_at()
 
-
-    actual = len(tkpts)
-    expected = 2256
-    assert actual == expected
-
-    expected_attr_count = 8
-
-    # check the first trackpoint
-    expected_tkpt = expected_first_trackpoint()
-    actual_tkpt = handler.trackpoints[0]
-    assert len(actual_tkpt.values) == expected_attr_count
-    for key in expected_tkpt.keys():
-        expected, actual = expected_tkpt[key], actual_tkpt.values[key]
-        assert expected == actual
-
-    # check the last trackpoint
-    expected_tkpt = expected_last_trackpoint()
-    actual_tkpt = handler.trackpoints[-1]
-    assert len(actual_tkpt.values) == expected_attr_count
-    for key in expected_tkpt.keys():
-        expected, actual = expected_tkpt[key], actual_tkpt.values[key]
-        assert expected == actual
-
-    # check seconds_to_midnight
-    secs = int(handler.first_time_secs_to_midnight)
-    assert secs > 0
-    assert secs < 86400
+    helper.assert_trackpoint_count(expected_trackpoint_count)
+    helper.assert_first_trackpoint(expected_first_trackpoint())
+    helper.assert_last_trackpoint(expected_last_trackpoint())
