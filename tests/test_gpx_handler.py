@@ -1,7 +1,8 @@
 import ggps
 
-# pytest -v tests/test_gpx_handler.py
+from tests.helpers.unit_test_helper import UnitTestHelper
 
+# pytest -v tests/test_gpx_handler.py
 
 def expected_first_trackpoint():
     return {
@@ -10,22 +11,22 @@ def expected_first_trackpoint():
       "longitudedegrees": -93.26310088858008,
       "time": "2014-10-05T13:07:53.000Z",
       "heartratebpm": 85,
-      "seq": 1,
       "elapsedtime": "00:00:00",
-      "elapsedseconds": 0.0
+      "elapsedseconds": 0.0,
+      "seq": 1
     }
 
 
-def expected_middle_trackpoint():
+def expected_trackpoint_1200():
     return {
       "type": "Trackpoint",
-      "latitudedegrees": 44.959017438814044,
-      "longitudedegrees": -93.21290854364634,
-      "time": "2014-10-05T16:21:12.000Z",
+      "latitudedegrees": 44.91043584421277,
+      "longitudedegrees": -93.2357053924352,
+      "time": "2014-10-05T15:15:47.000Z",
       "heartratebpm": 140,
-      "seq": 1747,
-      "elapsedtime": "03:13:19",
-      "elapsedseconds": 11599.0
+      "elapsedtime": "02:07:54",
+      "elapsedseconds": 7674.0,
+      "seq": 1200
     }
 
 
@@ -36,52 +37,24 @@ def expected_last_trackpoint():
       "longitudedegrees": -93.10493202880025,
       "time": "2014-10-05T17:22:17.000Z",
       "heartratebpm": 161,
-      "seq": 2256,
       "elapsedtime": "04:14:24",
-      "elapsedseconds": 15264.0
+      "elapsedseconds": 15264.0,
+      "seq": 2256
     }
 
 def test_twin_cities_marathon_gpx_file():
+    expected_trackpoint_count = 2256
     filename = "data/twin_cities_marathon.gpx"
     options = dict()
     handler = ggps.GpxHandler(options)
     handler.parse(filename)
 
-    data = handler.get_data()
-    tkpts = data["trackpoints"]
+    helper = UnitTestHelper(handler.get_data())
+    helper.assert_filename(filename)
+    helper.assert_ggps_version()
+    helper.assert_ggps_parsed_at()
 
-
-    actual = len(tkpts)
-    expected = 2256
-    assert actual == expected
-
-    expected_attr_count = 8
-
-    # check the first trackpoint
-    expected_tkpt = expected_first_trackpoint()
-    actual_tkpt = handler.trackpoints[0]
-    assert len(actual_tkpt.values) == expected_attr_count
-    for key in expected_tkpt.keys():
-        expected, actual = expected_tkpt[key], actual_tkpt.values[key]
-        assert expected == actual
-
-    # check a trackpoint at ~mile 20
-    expected_tkpt = expected_middle_trackpoint()
-    actual_tkpt = handler.trackpoints[1746]
-    assert len(actual_tkpt.values) == expected_attr_count
-    for key in expected_tkpt.keys():
-        expected, actual = expected_tkpt[key], actual_tkpt.values[key]
-        assert expected == actual
-
-    # check the last trackpoint
-    expected_tkpt = expected_last_trackpoint()
-    actual_tkpt = handler.trackpoints[-1]
-    assert len(actual_tkpt.values) == expected_attr_count
-    for key in expected_tkpt.keys():
-        expected, actual = expected_tkpt[key], actual_tkpt.values[key]
-        assert expected == actual
-
-    # check seconds_to_midnight
-    secs = int(handler.first_time_secs_to_midnight)
-    assert secs > 0
-    assert secs < 86400
+    helper.assert_trackpoint_count(expected_trackpoint_count)
+    helper.assert_first_trackpoint(expected_first_trackpoint())
+    helper.assert_last_trackpoint(expected_last_trackpoint())
+    helper.assert_trackpoint_at_index(expected_trackpoint_1200(), 1199)

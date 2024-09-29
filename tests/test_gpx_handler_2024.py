@@ -52,4 +52,3 @@ def test_lorimer_avinger_gpx_file():
     helper.assert_trackpoint_count(expected_trackpoint_count)
     helper.assert_first_trackpoint(expected_first_trackpoint())
     helper.assert_last_trackpoint(expected_last_trackpoint())
-
