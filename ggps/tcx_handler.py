@@ -16,9 +16,9 @@ class TcxHandler(BaseHandler):
         xml.sax.parse(open(filename), self)
         return self
 
-    def __init__(self):
-        BaseHandler.__init__(self)
-
+    def __init__(self, opts:dict = {}):
+        BaseHandler.__init__(self, opts)
+        
     def startElement(self, tag_name, attrs):
         self.heirarchy.append(tag_name)
         self.reset_curr_text()

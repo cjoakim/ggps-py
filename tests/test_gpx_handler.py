@@ -1,54 +1,61 @@
 import ggps
 
+# pytest -v tests/test_gpx_handler.py
+
 
 def expected_first_trackpoint():
     return {
-        "elapsedtime": "00:00:00",
-        "heartratebpm": "85",
-        "latitudedegrees": "44.97431952506304",
-        "longitudedegrees": "-93.26310088858008",
-        "seq": "1",
-        "time": "2014-10-05T13:07:53.000Z",
-        "type": "Trackpoint",
+      "type": "Trackpoint",
+      "latitudedegrees": 44.97431952506304,
+      "longitudedegrees": -93.26310088858008,
+      "time": "2014-10-05T13:07:53.000Z",
+      "heartratebpm": 85,
+      "seq": 1,
+      "elapsedtime": "00:00:00",
+      "elapsedseconds": 0.0
     }
 
 
 def expected_middle_trackpoint():
     return {
-        "elapsedtime": "03:13:19",
-        "heartratebpm": "140",
-        "latitudedegrees": "44.959017438814044",
-        "longitudedegrees": "-93.21290854364634",
-        "seq": "1747",
-        "time": "2014-10-05T16:21:12.000Z",
-        "type": "Trackpoint",
+      "type": "Trackpoint",
+      "latitudedegrees": 44.959017438814044,
+      "longitudedegrees": -93.21290854364634,
+      "time": "2014-10-05T16:21:12.000Z",
+      "heartratebpm": 140,
+      "seq": 1747,
+      "elapsedtime": "03:13:19",
+      "elapsedseconds": 11599.0
     }
 
 
 def expected_last_trackpoint():
     return {
-        "elapsedtime": "04:14:24",
-        "heartratebpm": "161",
-        "latitudedegrees": "44.95180849917233",
-        "longitudedegrees": "-93.10493202880025",
-        "seq": "2256",
-        "time": "2014-10-05T17:22:17.000Z",
-        "type": "Trackpoint",
+      "type": "Trackpoint",
+      "latitudedegrees": 44.95180849917233,
+      "longitudedegrees": -93.10493202880025,
+      "time": "2014-10-05T17:22:17.000Z",
+      "heartratebpm": 161,
+      "seq": 2256,
+      "elapsedtime": "04:14:24",
+      "elapsedseconds": 15264.0
     }
-
 
 def test_twin_cities_marathon_gpx_file():
     filename = "data/twin_cities_marathon.gpx"
-    handler = ggps.GpxHandler()
+    options = dict()
+    handler = ggps.GpxHandler(options)
     handler.parse(filename)
 
-    tkpts = handler.trackpoints
-    expected_attr_count = 7
+    data = handler.get_data()
+    tkpts = data["trackpoints"]
 
-    # check the number of trackpoints
+
     actual = len(tkpts)
     expected = 2256
     assert actual == expected
+
+    expected_attr_count = 8
 
     # check the first trackpoint
     expected_tkpt = expected_first_trackpoint()

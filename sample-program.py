@@ -5,7 +5,7 @@ import ggps
 
 
 def parse_file(infile, handler_type):
-    print("processing file: {} type: {}".format(infile, handler_type))
+    print("parsing file: {} type: {}".format(infile, handler_type))
     handler = None
     if handler_type == "tcx":
         handler = ggps.TcxHandler()
@@ -15,7 +15,7 @@ def parse_file(infile, handler_type):
         handler = ggps.PathHandler()
 
     handler.parse(infile)
-    print(repr(handler))
+    #print(repr(handler))
     handler.write_json_file()
 
 

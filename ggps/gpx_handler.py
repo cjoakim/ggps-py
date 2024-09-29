@@ -13,10 +13,14 @@ class GpxHandler(BaseHandler):
         self.filename = filename
         self.handler_type = "gpx"
         xml.sax.parse(open(filename), self)
+
+        for t in self.trackpoints:
+            t.post_parse()
+
         return self
 
-    def __init__(self):
-        BaseHandler.__init__(self)
+    def __init__(self, opts:dict = {}):
+        BaseHandler.__init__(self, opts)
 
     def startElement(self, tag_name, attrs):
         self.heirarchy.append(tag_name)

@@ -41,8 +41,9 @@ class Trackpoint(object):
     def post_parse(self):
         """Convert the XML-parsed strings into the appropriate datatypes."""
         self.to_int("seq")
-        self.to_int("cadence")
-        self.to_int("cadencex2")
+        if "cadence" in self.values.keys():
+            self.to_int("cadence")
+            self.to_int("cadencex2")
         self.to_int("heartratebpm")
         self.to_float("latitudedegrees")
         self.to_float("longitudedegrees")
