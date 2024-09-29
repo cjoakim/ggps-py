@@ -61,7 +61,11 @@ class Trackpoint(object):
                 self.values[key] = int(self.values[key])
         except:
             self.values[key] = 0
-            print("Error converting {0} {} to int".format(key), self.values[key])
+            print(
+                "ggps.Trackpoint - error converting {} {} to int".format(
+                    key, self.values[key]
+                )
+            )
 
     def to_float(self, key):
         try:
@@ -70,15 +74,12 @@ class Trackpoint(object):
         except:
             self.values[key] = 0.0
             print(
-                "ggps.Trackpoint - error converting {} {} to int".format(
+                "ggps.Trackpoint - error converting {} {} to float".format(
                     key, self.values[key]
                 )
             )
 
     def calculate_elapsedseconds(self):
-        try:
-            if "elapsedtime" in self.values.keys():
-                et = ElapsedTime(self.values["elapsedtime"])
-                self.values["elapsedseconds"] = et.secs
-        except Exception as e:
-            print(e)
+        if "elapsedtime" in self.values.keys():
+            et = ElapsedTime(self.values["elapsedtime"])
+            self.values["elapsedseconds"] = et.secs

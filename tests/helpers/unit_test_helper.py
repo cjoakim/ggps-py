@@ -78,3 +78,6 @@ class UnitTestHelper(object):
         s = str(self.handler)
         f = self.handler.filename.strip().lower()
         assert f in s
+
+    def assert_curr_depth(self, depth):
+        assert self.handler.curr_depth() == depth

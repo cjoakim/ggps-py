@@ -44,3 +44,4 @@ def test_twin_cities_marathon_tcx():
     )
     assert counter["TrainingCenterDatabase|Author|Name"] == 1
     helper.assert_str()
+    helper.assert_curr_depth(0)
