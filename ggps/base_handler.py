@@ -52,7 +52,8 @@ class BaseHandler(xml.sax.ContentHandler):
                 data["device_id"] = self.device_id
             data["trackpoint_count"] = self.trackpoint_count()
             data["trackpoints"] = list()
-            for t in self.trackpoints:
+            for idx, t in enumerate(self.trackpoints):
+                t.set("seq", str(idx + 1))
                 t.post_parse()
                 data["trackpoints"].append(t.values)
         return data

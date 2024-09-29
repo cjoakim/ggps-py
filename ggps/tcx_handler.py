@@ -63,7 +63,6 @@ class TcxHandler(BaseHandler):
             if idx == 0:
                 self.set_first_trackpoint(t)
 
-            t.set("seq", "{0}".format(idx + 1))
             self.meters_to_feet(t, "altitudemeters", "altitudefeet")
             self.meters_to_miles(t, "distancemeters", "distancemiles")
             self.meters_to_km(t, "distancemeters", "distancekilometers")

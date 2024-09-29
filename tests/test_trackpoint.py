@@ -2,6 +2,9 @@ import json
 
 import ggps
 
+from tests.helpers.unit_test_helper import UnitTestHelper
+
+# pytest -v tests/test_trackpoint.py
 
 def test_str():
     t = ggps.Trackpoint()
