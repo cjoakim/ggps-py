@@ -15,7 +15,7 @@ def parse_file(infile, handler_type):
         handler = ggps.PathHandler()
 
     handler.parse(infile)
-    #print(repr(handler))
+    # print(repr(handler))
     handler.write_json_file()
 
 

@@ -12,9 +12,9 @@ class PathHandler(BaseHandler):
         xml.sax.parse(open(filename), self)
         return self
 
-    def __init__(self, opts:dict = {}):
+    def __init__(self, opts: dict = {}):
         BaseHandler.__init__(self, opts)
-        
+
     def startElement(self, name, attrs):
         self.heirarchy.append(name)
         path = self.curr_path()

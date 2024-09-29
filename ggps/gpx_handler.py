@@ -19,7 +19,7 @@ class GpxHandler(BaseHandler):
 
         return self
 
-    def __init__(self, opts:dict = {}):
+    def __init__(self, opts: dict = {}):
         BaseHandler.__init__(self, opts)
 
     def startElement(self, tag_name, attrs):

@@ -2,13 +2,14 @@ import pytest
 
 import ggps
 
+
 class UnitTestHelper(object):
 
     def __init__(self, parsed_data: dict):
         self.data = parsed_data
 
     def hey(self):
-        print('hey!')
+        print("hey!")
 
     def assert_filename(self, expected):
         actual = self.data["filename"]
@@ -39,23 +40,37 @@ class UnitTestHelper(object):
 
     def assert_trackpoint_count(self, expected):
         actual = len(self.data["trackpoints"])
-        print("assert_trackpoint_count; actual {}, expected: {}".format(actual, expected))
+        print(
+            "assert_trackpoint_count; actual {}, expected: {}".format(actual, expected)
+        )
         assert actual == expected
 
         last_seq = self.data["trackpoints"][-1]["seq"]
         assert last_seq == len(self.data["trackpoints"])
 
-    def assert_first_trackpoint(self, expected:dict):
+    def assert_first_trackpoint(self, expected: dict):
         actual = self.data["trackpoints"][0]
-        print("assert_first_trackpoint; \n actual {}, \n expected: {}".format(actual, expected))
+        print(
+            "assert_first_trackpoint; \n actual {}, \n expected: {}".format(
+                actual, expected
+            )
+        )
         assert actual == expected
 
-    def assert_last_trackpoint(self, expected:dict):
+    def assert_last_trackpoint(self, expected: dict):
         actual = self.data["trackpoints"][-1]
-        print("assert_last_trackpoint; \n actual {}, \n expected: {}".format(actual, expected))
+        print(
+            "assert_last_trackpoint; \n actual {}, \n expected: {}".format(
+                actual, expected
+            )
+        )
         assert actual == expected
 
-    def assert_trackpoint_at_index(self, expected:dict, index:int):
+    def assert_trackpoint_at_index(self, expected: dict, index: int):
         actual = self.data["trackpoints"][index]
-        print("assert_trackpoint_at_index; \n actual {}, \n expected: {}".format(actual, expected))
+        print(
+            "assert_trackpoint_at_index; \n actual {}, \n expected: {}".format(
+                actual, expected
+            )
+        )
         assert actual == expected

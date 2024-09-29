@@ -12,7 +12,7 @@ from ggps import VERSION
 
 class BaseHandler(xml.sax.ContentHandler):
 
-    def __init__(self, opts: dict={}):
+    def __init__(self, opts: dict = {}):
         xml.sax.ContentHandler.__init__(self)
         self.filename = None
         self.handler_type = None

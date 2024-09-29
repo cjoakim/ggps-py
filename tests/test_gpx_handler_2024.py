@@ -7,32 +7,32 @@ from tests.helpers.unit_test_helper import UnitTestHelper
 
 def expected_first_trackpoint():
     return {
-      "type": "Trackpoint",
-      "latitudedegrees": 35.49427421763539,
-      "longitudedegrees": -80.83952489309013,
-      "time": "2024-09-19T11:05:15.000Z",
-      "heartratebpm": 68,
-      "cadence": 0,
-      "trackpointextension": "",
-      "elapsedtime": "00:00:00",
-      "elapsedseconds": 0.0,
-      "seq": 1
+        "type": "Trackpoint",
+        "latitudedegrees": 35.49427421763539,
+        "longitudedegrees": -80.83952489309013,
+        "time": "2024-09-19T11:05:15.000Z",
+        "heartratebpm": 68,
+        "cadence": 0,
+        "trackpointextension": "",
+        "elapsedtime": "00:00:00",
+        "elapsedseconds": 0.0,
+        "seq": 1,
     }
 
 
 def expected_last_trackpoint():
     return {
-      "type": "Trackpoint",
-      "latitudedegrees": 35.49437488429248,
-      "longitudedegrees": -80.840053120628,
-      "time": "2024-09-19T11:51:32.000Z",
-      "heartratebpm": 145,
-      "cadence": 90,
-      "trackpointextension": "",
-      "elapsedtime": "00:46:17",
-      "cadencex2": 180,
-      "elapsedseconds": 2777.0,
-      "seq": 2778
+        "type": "Trackpoint",
+        "latitudedegrees": 35.49437488429248,
+        "longitudedegrees": -80.840053120628,
+        "time": "2024-09-19T11:51:32.000Z",
+        "heartratebpm": 145,
+        "cadence": 90,
+        "trackpointextension": "",
+        "elapsedtime": "00:46:17",
+        "cadencex2": 180,
+        "elapsedseconds": 2777.0,
+        "seq": 2778,
     }
 
 
