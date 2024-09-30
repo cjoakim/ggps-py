@@ -11,8 +11,16 @@ ggps - gps file parsing utilities for garmin connect and garmin devices
 ## Features
 
 - Parse **gpx** and **tcx** files downloaded from Garmin Connect (https://connect.garmin.com)
-- The GPX parsed Trackpoint data includes additional/augmented values, including as "seq" and "elapsedtime".
-- The TCX parsed Trackpoint data additionally includes additional/augmented values, such as "altitudefeet", "distancemiles", "distancekilometers", and "runcadencex2".
+- Use class **TcxHandler** to parse TCX files
+  - contains the Trackpoint data with additional/augmented values, such as:
+    - "elapsedtime", "elapsedseconds", "altitudefeet", "distancemiles", "distancekilometers", and "cadencex2"
+  - also includes an event "stats" summary with heartbeat_data and cadence_data sections
+  - the stats contains value histograms and computed values such as averages
+  - cadence_data includes run/walk/idle time percentages
+- Use class **GpxHandler** to parse GPX files
+  - contains the Trackpoint data with additional/augmented values, such as:
+    - "seq", "elapsedtime", "elapsedseconds"
+- Discover the structure of the TCX/GPX/XML files with class **PathHandler**
 
 
 ## Quick start
