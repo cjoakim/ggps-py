@@ -217,8 +217,8 @@ def expected_stats():
 def test_twin_cities_marathon_tcx_file():
     expected_trackpoint_count = 2256
     filename = "data/twin_cities_marathon.tcx"
-    options = dict()
-    handler = ggps.TcxHandler(options)
+    opts = dict()
+    handler = ggps.TcxHandler(opts)
     handler.parse(filename)
 
     helper = UnitTestHelper(handler)

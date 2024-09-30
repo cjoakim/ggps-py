@@ -9,6 +9,7 @@ import m26
 from ggps.counter import Counter
 from ggps.trackpoint import Trackpoint
 from ggps import VERSION
+from ggps import DEFAULT_RUN_WALK_SEPARATOR_CADENCE
 
 
 class BaseHandler(xml.sax.ContentHandler):
@@ -30,7 +31,7 @@ class BaseHandler(xml.sax.ContentHandler):
         self.version = VERSION
         self.device_name = None
         self.device_id = None
-        self.run_walk_separator_cadence = 150
+        self.run_walk_separator_cadence = DEFAULT_RUN_WALK_SEPARATOR_CADENCE
 
         if "run_walk_separator_cadence" in opts.keys():
             try:
@@ -107,6 +108,8 @@ class BaseHandler(xml.sax.ContentHandler):
                     # populate cadence_data
                     cdata = cadence_counter.get_data()
                     cadence_data["histogram"] = cdata
+                    cadence_data["running_avg_cadence"] = 0.0  # default
+                    cadence_data["walking_avg_cadence"] = 0.0  # default
 
                     running_count = 0
                     walking_count = 0
@@ -153,15 +156,11 @@ class BaseHandler(xml.sax.ContentHandler):
                         cadence_data["running_avg_cadence"] = float(
                             running_steps
                         ) / float(running_count)
-                    else:
-                        cadence_data["running_avg_cadence"] = 0.0
 
                     if walking_count > 0:
                         cadence_data["walking_avg_cadence"] = float(
                             walking_steps
                         ) / float(walking_count)
-                    else:
-                        cadence_data["walking_avg_cadence"] = 0.0
 
         return data
 

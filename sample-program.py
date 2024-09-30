@@ -9,12 +9,16 @@ import ggps
 def parse_file(infile, handler_type):
     print("parsing file: {} type: {}".format(infile, handler_type))
     handler = None
+    opts = dict()
+    opts["run_walk_separator_cadence"] = 150  # 150 is the default
+    # opts["no-stats"] = "any value"
+
     if handler_type == "tcx":
-        handler = ggps.TcxHandler()
+        handler = ggps.TcxHandler(opts)
     elif handler_type == "gpx":
-        handler = ggps.GpxHandler()
+        handler = ggps.GpxHandler(opts)
     else:
-        handler = ggps.PathHandler()
+        handler = ggps.PathHandler(opts)
 
     handler.parse(infile)
     # print(str(handler))
