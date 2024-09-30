@@ -39,12 +39,12 @@ class Counter:
 
     def most_frequent(self) -> str:
         """Return the most frequent key in the counter."""
-        top_value, top_word = -1, None
+        top_value, top_key = -1, None
         for key in self.data.keys():
             if self.data[key] > top_value:
                 top_value = self.data[key]
-                top_word = key
-        return top_word
+                top_key = key
+        return top_key
 
     def merge(self, another_counter) -> None:
         """Merge the values in the given counter with this counter."""
