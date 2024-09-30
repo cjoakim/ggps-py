@@ -459,7 +459,7 @@ file written: data/activity_607442311.gpx.path.json
 Current version: 0.5.0
 
 -  2024/09/30, version 0.5.0   Output as JSON files with numeric attributes
-                               stats added to TCX output by default
+                               stats added to TCX output by default with heartbeat_data and cadence_data sections
                                configurable run_walk_separator_cadence
                                new sample program
 -  2024/09/23, version 0.4.1,  Fix pyproject.toml project description
