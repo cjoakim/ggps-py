@@ -22,9 +22,9 @@ ggps - gps file parsing utilities for garmin connect and garmin devices
     - "seq", "elapsedtime", "elapsedseconds"
 - Discover the structure of the TCX/GPX/XML files with class **PathHandler**
 
+---
 
 ## Quick start
-
 
 ### Installation
 
@@ -33,7 +33,6 @@ $ pip install ggps
 ```
 
 ### Use
-
 
 #### Sample Program
 
