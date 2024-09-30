@@ -6,6 +6,7 @@ from datetime import datetime
 
 import m26
 
+from ggps.counter import Counter
 from ggps.trackpoint import Trackpoint
 from ggps import VERSION
 
@@ -42,6 +43,8 @@ class BaseHandler(xml.sax.ContentHandler):
         if self.handler_type == "path":
             data["path_counter"] = self.path_counter
         else:
+            cadence_counter = Counter()
+            heartbeat_counter = Counter()
             if self.handler_type == "tcx":
                 data["device_name"] = self.device_name
                 data["device_id"] = self.device_id
@@ -51,6 +54,61 @@ class BaseHandler(xml.sax.ContentHandler):
                 t.set("seq", str(idx + 1))
                 t.post_parse()
                 data["trackpoints"].append(t.values)
+                if self.handler_type == "tcx":
+                    if "cadencex2" in t.values.keys():
+                        cadence_counter.increment(t.get("cadencex2"))
+                    if "heartratebpm" in t.values.keys():
+                        heartbeat_counter.increment(t.get("heartratebpm"))
+
+            if self.handler_type == "tcx":
+                stats = dict()
+                stats["cadence_histogram"] = cadence_counter.get_data()
+                stats["heartbeat_histogram"] = heartbeat_counter.get_data()
+
+                # calculate average walking cadence, running cadence, medians, running percent
+
+                cdata = cadence_counter.get_data()
+                run_walk_separator_cadence = 150  # below is walking, above is running
+                running_count = 0
+                walking_count = 0
+                idle_count = 0
+                running_steps = 0
+                walking_steps = 0
+                for key in cadence_counter.get_data().keys():
+                    cad = int(key)
+                    cnt = cdata[key]
+                    if cad == 0:
+                        idle_count = idle_count + cnt
+                    else:
+                        if cad >= run_walk_separator_cadence:
+                            running_count = running_count + cnt
+                            running_steps = running_steps + (cad * cnt)
+                        else:
+                            walking_count = walking_count + cnt
+                            walking_steps = walking_steps + (cad * cnt)
+
+                total_count = running_count + walking_count + idle_count
+                stats["total_count"] = total_count
+                stats["running_count"] = running_count
+                stats["walking_count"] = walking_count
+                stats["idle_count"] = idle_count
+
+                stats["running_pct"] = float(running_count) / float(total_count) * 100.0
+                stats["walking_pct"] = float(walking_count) / float(total_count) * 100.0
+                stats["idle_pct"] = float(idle_count) / float(total_count) * 100.0
+
+                stats["running_steps"] = running_steps
+                stats["walking_steps"] = walking_steps
+                stats["total_steps"] = running_steps + walking_steps
+                if running_count > 0:
+                    stats["running_avg_cadence"] = float(running_steps) / float(running_count)
+                else:
+                    stats["running_avg_cadence"] = 0.0
+                if walking_count > 0:
+                    stats["walking_avg_cadence"] = float(walking_steps) / float(walking_count)
+                else:
+                    stats["walking_avg_cadence"] = 0.0
+                data["stats"] = stats
         return data
 
     def endDocument(self):
