@@ -2,10 +2,6 @@ import json
 
 import ggps
 
-# Use:
-# $ python sample-program.py > tmp/sample-program.txt
-
-
 def parse_file(infile, handler_type):
     print("parsing file: {} type: {}".format(infile, handler_type))
     handler = None
