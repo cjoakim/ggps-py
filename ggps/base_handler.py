@@ -65,8 +65,28 @@ class BaseHandler(xml.sax.ContentHandler):
                 stats["cadence_histogram"] = cadence_counter.get_data()
                 stats["heartbeat_histogram"] = heartbeat_counter.get_data()
 
-                # calculate average walking cadence, running cadence, medians, running percent
+                # heartbeat calculations
+                cdata = heartbeat_counter.get_data()
+                total_count = 0
+                total_heartbeats = 0
+                total_heartbeat_readings = 0
+                highest_heartbeat = 0
+                for key in heartbeat_counter.get_data().keys():
+                    bpm = int(key)
+                    cnt = cdata[key]
+                    total_heartbeat_readings = total_heartbeat_readings + cnt
+                    total_heartbeats = total_heartbeats + (bpm * cnt)
+                    if bpm > highest_heartbeat:
+                        highest_heartbeat = bpm
+                stats["highest_heartbeat"] = highest_heartbeat
+                stats["total_heartbeats"] = total_heartbeats
+                stats["total_heartbeat_readings"] = total_heartbeat_readings
+                if total_heartbeat_readings > 0:
+                    stats["average_heartbeat"] = float(total_heartbeats) / float(
+                        total_heartbeat_readings
+                    )
 
+                # cadence calculations
                 cdata = cadence_counter.get_data()
                 run_walk_separator_cadence = 150  # below is walking, above is running
                 running_count = 0
