@@ -1,5 +1,6 @@
 import json
 
+
 class Counter:
     """
     This class implements a simple int counter with an underlying dict object.

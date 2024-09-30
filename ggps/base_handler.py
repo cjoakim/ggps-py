@@ -101,11 +101,15 @@ class BaseHandler(xml.sax.ContentHandler):
                 stats["walking_steps"] = walking_steps
                 stats["total_steps"] = running_steps + walking_steps
                 if running_count > 0:
-                    stats["running_avg_cadence"] = float(running_steps) / float(running_count)
+                    stats["running_avg_cadence"] = float(running_steps) / float(
+                        running_count
+                    )
                 else:
                     stats["running_avg_cadence"] = 0.0
                 if walking_count > 0:
-                    stats["walking_avg_cadence"] = float(walking_steps) / float(walking_count)
+                    stats["walking_avg_cadence"] = float(walking_steps) / float(
+                        walking_count
+                    )
                 else:
                     stats["walking_avg_cadence"] = 0.0
                 data["stats"] = stats
