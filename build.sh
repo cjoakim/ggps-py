@@ -13,9 +13,9 @@ if [ "$1" = "explode" ]
 then
     # explode the tar file and list its contents
     cd dist/
-    gunzip ggps-0.5.0.tar.gz
-    tar tvf ggps-0.5.0.tar > ggps.tar.contents.txt
-    tar xvf ggps-0.5.0.tar
+    gunzip ggps-0.5.1.tar.gz
+    tar tvf ggps-0.5.1.tar > ggps.tar.contents.txt
+    tar xvf ggps-0.5.1.tar
     cat ggps.tar.contents.txt
     cd ..
 else
@@ -27,12 +27,12 @@ fi
 
 # $ python3 -m twine upload --repository testpypi dist/*
 # Uploading distributions to https://test.pypi.org/legacy/
-# Uploading ggps-0.5.0-py3-none-any.whl
+# Uploading ggps-0.5.1-py3-none-any.whl
 # 100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 18.1/18.1 kB • 00:00 • 19.3 MB/s
-# Uploading ggps-0.5.0.tar.gz
+# Uploading ggps-0.5.1.tar.gz
 # 100% ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 18.6/18.6 kB • 00:00 • 12.1 MB/s
 
 # View at:
-# https://test.pypi.org/project/ggps/0.5.0/
+# https://test.pypi.org/project/ggps/0.5.1/
 
 # python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps ggps
