@@ -1,4 +1,4 @@
-import pytest
+import json
 
 import ggps
 
@@ -54,6 +54,7 @@ class UnitTestHelper(object):
                 actual, expected
             )
         )
+        self.compare_attributes(expected, actual)
         assert actual == expected
 
     def assert_last_trackpoint(self, expected: dict):
@@ -63,6 +64,7 @@ class UnitTestHelper(object):
                 actual, expected
             )
         )
+        self.compare_attributes(expected, actual)
         assert actual == expected
 
     def assert_trackpoint_at_index(self, expected: dict, index: int):
@@ -72,7 +74,25 @@ class UnitTestHelper(object):
                 actual, expected
             )
         )
+        self.compare_attributes(expected, actual)
         assert actual == expected
+
+    def compare_attributes(self, expected: dict, actual: dict):
+        merged = dict()
+        merged.update(expected)
+        merged.update(actual)
+        for key in sorted(merged.keys()):
+            if key not in expected:
+                print("keydiff {} not in expected".format(key))
+            elif key not in actual:
+                print("keydiff {} not in actual".format(key))
+            else:
+                if expected[key] != actual[key]:
+                    print(
+                        "key {}: expected: {}, actual: {}".format(
+                            key, expected[key], actual[key]
+                        )
+                    )
 
     def assert_str(self):
         s = str(self.handler)

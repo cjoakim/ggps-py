@@ -13,6 +13,7 @@ def expected_first_trackpoint():
         "time": "2024-09-19T11:05:15.000Z",
         "heartratebpm": 68,
         "cadence": 0,
+        "cadencex2": 0,
         "trackpointextension": "",
         "elapsedtime": "00:00:00",
         "elapsedseconds": 0.0,

@@ -66,5 +66,5 @@ class TcxHandler(BaseHandler):
             self.meters_to_feet(t, "altitudemeters", "altitudefeet")
             self.meters_to_miles(t, "distancemeters", "distancemiles")
             self.meters_to_km(t, "distancemeters", "distancekilometers")
-            self.cadence_x2(t)
+            t.set_cadence_x2()
             self.calculate_elapsed_time(t)

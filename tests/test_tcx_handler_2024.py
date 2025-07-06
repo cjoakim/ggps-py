@@ -18,6 +18,7 @@ def expected_first_trackpoint():
         "heartratebpm": 68,
         "speed": 0.0,
         "cadence": 0,
+        "cadencex2": 0,
         "watts": "0",
         "altitudefeet": 817.5852918249416,
         "distancemiles": 0.0005468066462059252,

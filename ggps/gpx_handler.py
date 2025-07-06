@@ -69,4 +69,4 @@ class GpxHandler(BaseHandler):
             if idx == 0:
                 self.set_first_trackpoint(t)
             self.calculate_elapsed_time(t)
-            self.cadence_x2(t)
+            t.set_cadence_x2()

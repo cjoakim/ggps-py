@@ -38,6 +38,13 @@ class Trackpoint(object):
     def __repr__(self):
         return json.dumps(self.values, sort_keys=True, indent=2)
 
+    def set_cadence_x2(self):
+        if "cadence" in self.values.keys():
+            c = self.get("cadence", 0)
+            i = int(c)
+            if i >= 0:
+                self.set("cadencex2", str(i * 2))
+
     def post_parse(self):
         """Convert the XML-parsed strings into the appropriate datatypes."""
         self.to_int("seq")
