@@ -23,7 +23,7 @@ class UnitTestHelper(object):
     def assert_ggps_parsed_at(self):
         actual = self.data["ggps_parsed_at"]
         print("assert_ggps_parsed_at; actual {}".format(actual))
-        assert actual.startswith("2024-")
+        assert actual.startswith("2025-")
         assert len(actual) == 26
 
     def assert_device_name(self, expected):

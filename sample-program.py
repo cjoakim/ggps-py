@@ -2,6 +2,7 @@ import json
 
 import ggps
 
+
 def parse_file(infile, handler_type):
     print("parsing file: {} type: {}".format(infile, handler_type))
     handler = None

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Execute the unit tests with code coverage.
-# Chris Joakim, September 2024
+# Chris Joakim, July 2025
 
-source venv/bin/activate
+source .venv/bin/activate
 
 echo 'reformatting source code with black ...'
 black *.py
