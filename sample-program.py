@@ -76,3 +76,7 @@ if __name__ == "__main__":
     parse_file("data/activity_607442311.tcx", "path")
     parse_file("data/activity_607442311.gpx", "gpx")
     parse_file("data/activity_607442311.gpx", "path")
+
+    # other files
+    parse_file("data/activity_19650143389.tcx", "tcx")
+
