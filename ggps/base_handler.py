@@ -47,120 +47,120 @@ class BaseHandler(xml.sax.ContentHandler):
     def get_data(self) -> dict:
         """Return a JSON serializable dictionary of the data in this handler."""
         data = dict()
-        data["filename"] = self.filename
-        data["ggps_version"] = self.version
-        data["ggps_parsed_at"] = str(datetime.now())
 
-        if self.handler_type == "path":
-            data["path_counter"] = self.path_counter
-        else:
-            cadence_counter = Counter()
-            heartbeat_counter = Counter()
-            if self.handler_type == "tcx":
-                data["device_name"] = self.device_name
-                data["device_id"] = self.device_id
-            data["trackpoint_count"] = self.trackpoint_count()
-            data["trackpoints"] = list()
-            for idx, t in enumerate(self.trackpoints):
-                t.set("seq", str(idx + 1))
-                t.post_parse()
-                data["trackpoints"].append(t.values)
+        try:
+            data["filename"] = self.filename
+            data["ggps_version"] = self.version
+            data["ggps_parsed_at"] = str(datetime.now())
+
+            if self.handler_type == "path":
+                data["path_counter"] = self.path_counter
+            else:
+                cadence_counter = Counter()
+                heartbeat_counter = Counter()
                 if self.handler_type == "tcx":
-                    if "cadencex2" in t.values.keys():
-                        cadence_counter.increment(t.get("cadencex2"))
-                    if "heartratebpm" in t.values.keys():
-                        heartbeat_counter.increment(t.get("heartratebpm"))
+                    data["device_name"] = self.device_name
+                    data["device_id"] = self.device_id
+                data["trackpoint_count"] = self.trackpoint_count()
+                data["trackpoints"] = list()
+                for idx, t in enumerate(self.trackpoints):
+                    t.set("seq", str(idx + 1))
+                    t.post_parse()
+                    data["trackpoints"].append(t.values)
+                    if self.handler_type == "tcx":
+                        if "cadencex2" in t.values.keys():
+                            cadence_counter.increment(t.get("cadencex2"))
+                        if "heartratebpm" in t.values.keys():
+                            heartbeat_counter.increment(t.get("heartratebpm"))
 
-            if self.handler_type == "tcx":
-                if "no-stats" in self.opts.keys():
-                    pass
-                else:
-                    # construct the stats nested dictionary
-                    stats, heartbeat_data, cadence_data = dict(), dict(), dict()
-                    stats["heartbeat_data"] = heartbeat_data
-                    stats["cadence_data"] = cadence_data
-                    data["stats"] = stats
+                if self.handler_type == "tcx":
+                    if "no-stats" in self.opts.keys():
+                        pass
+                    else:
+                        # construct the stats nested dictionary
+                        stats, heartbeat_data, cadence_data = dict(), dict(), dict()
+                        stats["heartbeat_data"] = heartbeat_data
+                        stats["cadence_data"] = cadence_data
+                        data["stats"] = stats
 
-                    # populate heartbeat_data
-                    cdata = heartbeat_counter.get_data()
-                    heartbeat_data["histogram"] = cdata
-                    total_count = 0
-                    total_heartbeats = 0
-                    total_heartbeat_readings = 0
-                    highest_bpm = 0
-                    for key in heartbeat_counter.get_data().keys():
-                        bpm = int(key)
-                        cnt = cdata[key]
-                        total_heartbeat_readings = total_heartbeat_readings + cnt
-                        total_heartbeats = total_heartbeats + (bpm * cnt)
-                        if bpm > highest_bpm:
-                            highest_bpm = bpm
-                    heartbeat_data["total_readings"] = total_heartbeat_readings
-                    heartbeat_data["highest_bpm"] = highest_bpm
-                    if total_heartbeat_readings > 0:
-                        heartbeat_data["average_bpm"] = float(total_heartbeats) / float(
-                            total_heartbeat_readings
+                        # populate heartbeat_data
+                        cdata = heartbeat_counter.get_data()
+                        heartbeat_data["histogram"] = cdata
+                        total_count = 0
+                        total_heartbeats = 0
+                        total_heartbeat_readings = 0
+                        highest_bpm = 0
+                        for key in heartbeat_counter.get_data().keys():
+                            bpm = int(key)
+                            cnt = cdata[key]
+                            total_heartbeat_readings = total_heartbeat_readings + cnt
+                            total_heartbeats = total_heartbeats + (bpm * cnt)
+                            if bpm > highest_bpm:
+                                highest_bpm = bpm
+                        heartbeat_data["total_readings"] = total_heartbeat_readings
+                        heartbeat_data["highest_bpm"] = highest_bpm
+                        if total_heartbeat_readings > 0:
+                            heartbeat_data["average_bpm"] = float(total_heartbeats) / float(
+                                total_heartbeat_readings
+                            )
+                        heartbeat_data["most_frequent_bpm"] = (
+                            heartbeat_counter.most_frequent()
                         )
-                    heartbeat_data["most_frequent_bpm"] = (
-                        heartbeat_counter.most_frequent()
-                    )
 
-                    # populate cadence_data
-                    cdata = cadence_counter.get_data()
-                    cadence_data["histogram"] = cdata
-                    cadence_data["running_avg_cadence"] = 0.0  # default
-                    cadence_data["walking_avg_cadence"] = 0.0  # default
+                        # populate cadence_data
+                        cdata = cadence_counter.get_data()
+                        cadence_data["histogram"] = cdata
+                        cadence_data["running_avg_cadence"] = 0.0  # default
+                        cadence_data["walking_avg_cadence"] = 0.0  # default
 
-                    running_count = 0
-                    walking_count = 0
-                    idle_count = 0
-                    running_steps = 0
-                    walking_steps = 0
-                    for key in cadence_counter.get_data().keys():
-                        cad = int(key)
-                        cnt = cdata[key]
-                        if cad == 0:
-                            idle_count = idle_count + cnt
-                        else:
-                            if cad >= self.run_walk_separator_cadence:
-                                running_count = running_count + cnt
-                                running_steps = running_steps + (cad * cnt)
+                        running_count = 0
+                        walking_count = 0
+                        idle_count = 0
+                        running_steps = 0
+                        walking_steps = 0
+                        for key in cadence_counter.get_data().keys():
+                            cad = int(key)
+                            cnt = cdata[key]
+                            if cad == 0:
+                                idle_count = idle_count + cnt
                             else:
-                                walking_count = walking_count + cnt
-                                walking_steps = walking_steps + (cad * cnt)
+                                if cad >= self.run_walk_separator_cadence:
+                                    running_count = running_count + cnt
+                                    running_steps = running_steps + (cad * cnt)
+                                else:
+                                    walking_count = walking_count + cnt
+                                    walking_steps = walking_steps + (cad * cnt)
 
-                    total_count = running_count + walking_count + idle_count
-                    cadence_data["run_walk_separator_cadence"] = (
-                        self.run_walk_separator_cadence
-                    )
-                    cadence_data["total_readings"] = total_count
-                    cadence_data["running_count"] = running_count
-                    cadence_data["walking_count"] = walking_count
-                    cadence_data["idle_count"] = idle_count
+                        total_count = running_count + walking_count + idle_count
+                        cadence_data["run_walk_separator_cadence"] = (
+                            self.run_walk_separator_cadence
+                        )
+                        cadence_data["total_readings"] = total_count
+                        cadence_data["running_count"] = running_count
+                        cadence_data["walking_count"] = walking_count
+                        cadence_data["idle_count"] = idle_count
 
-                    cadence_data["running_pct"] = (
-                        float(running_count) / float(total_count) * 100.0
-                    )
-                    cadence_data["walking_pct"] = (
-                        float(walking_count) / float(total_count) * 100.0
-                    )
-                    cadence_data["idle_pct"] = (
-                        float(idle_count) / float(total_count) * 100.0
-                    )
+                        cadence_data["running_pct"] = (
+                            float(running_count) / float(total_count) * 100.0
+                        )
+                        cadence_data["walking_pct"] = (
+                            float(walking_count) / float(total_count) * 100.0
+                        )
+                        cadence_data["idle_pct"] = (
+                            float(idle_count) / float(total_count) * 100.0
+                        )
 
-                    # cadence_data["running_steps"] = running_steps
-                    # cadence_data["walking_steps"] = walking_steps
-                    # cadence_data["total_steps"] = running_steps + walking_steps
+                        if running_count > 0:
+                            cadence_data["running_avg_cadence"] = float(
+                                running_steps
+                            ) / float(running_count)
 
-                    if running_count > 0:
-                        cadence_data["running_avg_cadence"] = float(
-                            running_steps
-                        ) / float(running_count)
-
-                    if walking_count > 0:
-                        cadence_data["walking_avg_cadence"] = float(
-                            walking_steps
-                        ) / float(walking_count)
+                        if walking_count > 0:
+                            cadence_data["walking_avg_cadence"] = float(
+                                walking_steps
+                            ) / float(walking_count)
+        except Exception as e:
+            print(f"Error: {e}")
 
         return data
 
