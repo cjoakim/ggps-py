@@ -80,3 +80,4 @@ if __name__ == "__main__":
 
     # other files
     parse_file("data/activity_19650143389.tcx", "tcx")
+    parse_file("data/activity_10101108916.tcx", "tcx")

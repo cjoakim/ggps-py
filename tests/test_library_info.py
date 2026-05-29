@@ -6,7 +6,7 @@ def test_author():
 
 
 def test_version():
-    assert ggps.VERSION == "1.0.0"
+    assert ggps.VERSION == "1.0.1"
 
 
 def test_default_run_walk_separator_cadence():

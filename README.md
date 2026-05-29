@@ -469,6 +469,7 @@ file written: data/activity_607442311.gpx.path.json
 ```
 Current version: 1.0.0
 
+-  2026/05/29, version 1.0.1   Enhanced exception handling
 -  2026/05/29, version 1.0.0   Transition to from pip to uv, pyproject.toml, and python 3.13
 -  2024/10/15, version 0.5.1   Enabled support for python 3.11
 -  2024/09/30, version 0.5.0   Output as JSON files with numeric attributes

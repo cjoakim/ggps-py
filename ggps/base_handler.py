@@ -1,4 +1,5 @@
 import json
+import traceback
 import xml.sax
 
 from collections import defaultdict
@@ -152,6 +153,7 @@ class BaseHandler(xml.sax.ContentHandler):
                             )
         except Exception as e:
             print(f"Error: {e}")
+            print(traceback.format_exc())
 
         return data
 
@@ -187,47 +189,79 @@ class BaseHandler(xml.sax.ContentHandler):
         self.first_time_secs_to_midnight = secs - self.first_time_secs
 
     def meters_to_feet(self, t, meters_key, new_key):
-        m = t.get(meters_key)
-        km = float(m) / 1000.0
-        d_km = m26.Distance(km, m26.Constants.uom_kilometers())
-        yds = d_km.as_yards()
-        t.set(new_key, str(yds * 3.000000))
+        default_value = "0"
+        try:
+            m = t.get(meters_key)
+            km = float(m) / 1000.0
+            d_km = m26.Distance(km, m26.Constants.uom_kilometers())
+            yds = d_km.as_yards()
+            t.set(new_key, str(yds * 3.000000))
+        except Exception as e:
+            print(
+                f"Exception in BaseHandler#meters_to_feet: {meters_key} {m} {e} using default value {default_value}"
+            )
+            t.set(new_key, default_value)
 
     def meters_to_km(self, t, meters_key, new_key):
-        m = t.get(meters_key)
-        km = float(m) / 1000.0
-        t.set(new_key, str(km))
+        default_value = "0"
+        try:
+            m = t.get(meters_key)
+            km = float(m) / 1000.0
+            t.set(new_key, str(km))
+        except Exception as e:
+            print(
+                f"Exception in BaseHandler#meters_to_km: {meters_key} {m} {e} using default value {default_value}"
+            )
+            t.set(new_key, default_value)
 
     def meters_to_miles(self, t, meters_key, new_key):
-        m = t.get(meters_key)
-        km = float(m) / 1000.0
-        d_km = m26.Distance(km, m26.Constants.uom_kilometers())
-        t.set(new_key, str(d_km.as_miles()))
+        default_value = "0"
+        try:
+            m = t.get(meters_key)
+            km = float(m) / 1000.0
+            d_km = m26.Distance(km, m26.Constants.uom_kilometers())
+            t.set(new_key, str(d_km.as_miles()))
+        except Exception as e:
+            print(
+                f"Exception in BaseHandler#meters_to_miles: {meters_key} {m} {e} using default value {default_value}"
+            )
+            t.set(new_key, default_value)
 
     def calculate_elapsed_time(self, t):
-        time_str = t.get("time")
-        new_key = "elapsedtime"
-        if time_str:
-            if time_str == self.first_time:
-                t.set(new_key, "00:00:00")
-            else:
-                curr_time = self.parse_hhmmss(time_str)
-                curr_etime = m26.ElapsedTime(curr_time.strip())
-                secs_diff = curr_etime.secs - self.first_time_secs
-                if secs_diff < 0:
-                    secs_diff = secs_diff + self.first_time_secs_to_midnight
-                elapsed = m26.ElapsedTime(secs_diff)
-                t.set(new_key, elapsed.as_hhmmss())
+        default_value = "00:00:00"
+        try:
+            time_str = t.get("time")
+            new_key = "elapsedtime"
+            if time_str:
+                if time_str == self.first_time:
+                    t.set(new_key, "00:00:00")
+                else:
+                    curr_time = self.parse_hhmmss(time_str)
+                    curr_etime = m26.ElapsedTime(curr_time.strip())
+                    secs_diff = curr_etime.secs - self.first_time_secs
+                    if secs_diff < 0:
+                        secs_diff = secs_diff + self.first_time_secs_to_midnight
+                    elapsed = m26.ElapsedTime(secs_diff)
+                    t.set(new_key, elapsed.as_hhmmss())
+        except Exception as e:
+            print(
+                f"Exception in BaseHandler#calculate_elapsed_time; using default value {default_value}"
+            )
+            t.set(new_key, default_value)
 
     def parse_hhmmss(self, time_str):
         """
         For a given datetime value like '2014-10-05T17:22:17.000Z' return the
         hhmmss value '17:22:17'.
         """
-        if len(time_str) > 0:
-            if "T" in time_str:
-                return str(time_str.split("T")[1][:8])
+        try:
+            if len(time_str) > 0:
+                if "T" in time_str:
+                    return str(time_str.split("T")[1][:8])
+                else:
+                    return ""
             else:
                 return ""
-        else:
+        except:
+            print(f"Exception in BaseHandler#parse_hhmmss; using default value of empty string")
             return ""
