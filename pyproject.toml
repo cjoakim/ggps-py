@@ -1,45 +1,37 @@
 [project]
 name = "ggps"
-version = "0.6.0"
+version = "1.0.0"
+
 dependencies = [
-  "black",
-  "pytest==8.3.3",
-  "pytest-cov==5.0.0",
-  "twine==5.1.1",
-  "m26>=0.3.2"
+  "m26>=0.3.2",
+  "pylint>=4.0.4",
+  "pytest-cov>=6.1.1",
+  "pytest-randomly>=4.0.0",
+  "pytest>=8.3.5",
 ]
-requires-python = ">=3.12"
+
+requires-python = ">=3.13"
 authors = [
   {name = "Chris Joakim", email = "christopher.joakim@gmail.com"}
 ]
 maintainers = [
   {name = "Chris Joakim", email = "christopher.joakim@gmail.com"}
 ]
-description = "ggps - gps file parsing utilities for garmin connect and garmin devices"
+description = "gps file parsing utilities for garmin connect and garmin devices"
 readme = "README.md"
 license = "MIT"
-license-files = ["LICENSE"]
-keywords = [
-  "python",
-  "garmin",
-  "gps",
-  "utilities",
-  "m26"
-]
+license-files = ["LICEN[CS]E.*"]
+keywords = ["garmin connect", "GPS", "TCX", "TPX", "KML", "XML", "parsing"]
 classifiers = [
-  "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python"
 ]
 
 [project.urls]
 Homepage = "https://github.com/cjoakim/ggps-py"
 
-[tool.setuptools.packages.find]
-include = ['m26']
-exclude = ['tmp', 'data', 'htmlcov']
-
 [tool.ruff]
 line-length = 100
 
-[tool.ruff.lint]
-ignore = ["E722"]
+[tool.pylint]
+max-line-length = 120          # Set maximum line length
+output-format = "colorized"    # Set output format
