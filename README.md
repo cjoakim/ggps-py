@@ -467,8 +467,9 @@ file written: data/activity_607442311.gpx.path.json
 ## Changelog
 
 ```
-Current version: 1.0.0
+Current version: 1.0.2
 
+-  2026/05/29, version 1.0.2   Bump the m26 lib to version 1.0.0
 -  2026/05/29, version 1.0.1   Enhanced exception handling
 -  2026/05/29, version 1.0.0   Transition to from pip to uv, pyproject.toml, and python 3.13
 -  2024/10/15, version 0.5.1   Enabled support for python 3.11
