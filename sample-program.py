@@ -2,6 +2,8 @@ import json
 
 import ggps
 
+# uv run sample-program.py
+
 
 def parse_file(infile, handler_type):
     print("parsing file: {} type: {}".format(infile, handler_type))

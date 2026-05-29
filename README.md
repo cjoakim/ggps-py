@@ -120,12 +120,16 @@ if __name__ == "__main__":
     parse_file("data/activity_607442311.gpx", "gpx")
     parse_file("data/activity_607442311.gpx", "path")
 
+    # other files
+    parse_file("data/activity_19650143389.tcx", "tcx")
 ```
 
 #### Executing the Sample Program
 
+Execute it with the uv command:
+
 ```
-$ python sample-program.py
+uv run sample-program.py
 ```
 
 #### Sample Program Output
@@ -187,7 +191,7 @@ file written: data/activity_607442311.gpx.path.json
 ```
 {
   "filename": "data/twin_cities_marathon.tcx",
-  "ggps_version": "0.5.0",
+  "ggps_version": "1.0.0",
   "ggps_parsed_at": "2024-09-30 09:44:13.594348",
   "device_name": "Garmin Forerunner 620",
   "device_id": "3875991210",
@@ -384,7 +388,7 @@ file written: data/activity_607442311.gpx.path.json
 ```
 {
   "filename": "data/twin_cities_marathon.tcx",
-  "ggps_version": "0.5.0",
+  "ggps_version": "1.0.0",
   "ggps_parsed_at": "2024-09-30 09:44:14.336540",
   "path_counter": {
     "TrainingCenterDatabase": 1,
@@ -463,8 +467,9 @@ file written: data/activity_607442311.gpx.path.json
 ## Changelog
 
 ```
-Current version: 0.5.1
+Current version: 1.0.0
 
+-  2026/05/29, version 1.0.0   Transition to from pip to uv, pyproject.toml, and python 3.13
 -  2024/10/15, version 0.5.1   Enabled support for python 3.11
 -  2024/09/30, version 0.5.0   Output as JSON files with numeric attributes
                                stats added to TCX output by default with heartbeat_data and cadence_data sections

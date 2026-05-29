@@ -3,7 +3,7 @@
 # Recreate the python virtual environment and reinstall libs on mac/linux
 # using a "modern" python toolchain which includes uv and pyproject.toml
 # rather than pip and requirements.in.
-# Chris Joakim, 2025
+# Chris Joakim, 2026
 
 echo "Prune/ensure directories..."
 rm -rf venv    # legacy directory 
@@ -14,21 +14,14 @@ rm -rf htmlcov
 mkdir -p out 
 mkdir -p tmp 
 
-echo "Creating a new virtual environment in .venv..."
+echo "Creating a new virtual environment in .venv ..."
 uv venv
 
-echo "Activating the virtual environment..."
+echo "Activating the virtual environment ..."
 source .venv/bin/activate
 
-echo "Installing libraries..."
-uv pip install --editable .
+echo "Installing libraries ..."
+uv pip install --prerelease=allow --editable .
 
-# echo "Creating a requirements.txt file..."
-# uv pip compile pyproject.toml -o requirements.txt
-
-# uv tree
-
-echo "Activating the virtual environment..."
-source .venv/bin/activate
-
-echo "next: source .venv/bin/activate"
+echo "Listing the installed libraries ..."
+uv pip list

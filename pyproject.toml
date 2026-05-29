@@ -20,7 +20,7 @@ maintainers = [
 description = "gps file parsing utilities for garmin connect and garmin devices"
 readme = "README.md"
 license = "MIT"
-license-files = ["LICEN[CS]E.*"]
+license-files = ["LICENSE"]
 keywords = ["garmin connect", "GPS", "TCX", "TPX", "KML", "XML", "parsing"]
 classifiers = [
   "Programming Language :: Python"
@@ -28,6 +28,9 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/cjoakim/ggps-py"
+
+[tool.setuptools.packages.find]
+include = ["ggps*"]
 
 [tool.ruff]
 line-length = 100
