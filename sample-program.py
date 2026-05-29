@@ -40,7 +40,6 @@ def write_json_file(handler, pretty=True, verbose=True) -> None:
 
 
 if __name__ == "__main__":
-
     print("ggps version {}".format(ggps.VERSION))
 
     # Latest files produced in 2024 with Forerunner 265S
@@ -81,4 +80,3 @@ if __name__ == "__main__":
 
     # other files
     parse_file("data/activity_19650143389.tcx", "tcx")
-

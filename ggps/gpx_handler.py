@@ -5,7 +5,6 @@ from ggps.trackpoint import Trackpoint
 
 
 class GpxHandler(BaseHandler):
-
     tkpt_path = "gpx|trk|trkseg|trkpt"  # ggps_src
     tkpt_path_len = len(tkpt_path)
 

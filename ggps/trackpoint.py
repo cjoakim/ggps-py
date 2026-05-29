@@ -12,7 +12,6 @@ such as int, float, or str.
 
 
 class Trackpoint(object):
-
     def __init__(self):
         self.values = dict()
         self.values["type"] = "Trackpoint"
@@ -68,11 +67,7 @@ class Trackpoint(object):
                 self.values[key] = int(self.values[key])
         except:
             self.values[key] = 0
-            print(
-                "ggps.Trackpoint - error converting {} {} to int".format(
-                    key, self.values[key]
-                )
-            )
+            print("ggps.Trackpoint - error converting {} {} to int".format(key, self.values[key]))
 
     def to_float(self, key):
         try:
@@ -80,11 +75,7 @@ class Trackpoint(object):
                 self.values[key] = float(self.values[key])
         except:
             self.values[key] = 0.0
-            print(
-                "ggps.Trackpoint - error converting {} {} to float".format(
-                    key, self.values[key]
-                )
-            )
+            print("ggps.Trackpoint - error converting {} {} to float".format(key, self.values[key]))
 
     def calculate_elapsedseconds(self):
         if "elapsedtime" in self.values.keys():

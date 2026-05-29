@@ -6,9 +6,9 @@
 source .venv/bin/activate
 
 echo 'reformatting source code with ruff ...'
-ruff *.py
-ruff ggps 
-ruff tests
+ruff format *.py
+ruff format ggps 
+ruff format tests
 
 echo 'executing unit tests with code coverage ...'
 pytest -v --cov=ggps/ --cov-report html tests/

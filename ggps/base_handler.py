@@ -13,7 +13,6 @@ from ggps import DEFAULT_RUN_WALK_SEPARATOR_CADENCE
 
 
 class BaseHandler(xml.sax.ContentHandler):
-
     def __init__(self, opts: dict = {}):
         xml.sax.ContentHandler.__init__(self)
         self.opts = opts
@@ -35,9 +34,7 @@ class BaseHandler(xml.sax.ContentHandler):
 
         if "run_walk_separator_cadence" in opts.keys():
             try:
-                self.run_walk_separator_cadence = int(
-                    opts["run_walk_separator_cadence"]
-                )
+                self.run_walk_separator_cadence = int(opts["run_walk_separator_cadence"])
             except:
                 self.run_walk_separator_cadence = 150
 
@@ -103,9 +100,7 @@ class BaseHandler(xml.sax.ContentHandler):
                             heartbeat_data["average_bpm"] = float(total_heartbeats) / float(
                                 total_heartbeat_readings
                             )
-                        heartbeat_data["most_frequent_bpm"] = (
-                            heartbeat_counter.most_frequent()
-                        )
+                        heartbeat_data["most_frequent_bpm"] = heartbeat_counter.most_frequent()
 
                         # populate cadence_data
                         cdata = cadence_counter.get_data()
@@ -132,9 +127,7 @@ class BaseHandler(xml.sax.ContentHandler):
                                     walking_steps = walking_steps + (cad * cnt)
 
                         total_count = running_count + walking_count + idle_count
-                        cadence_data["run_walk_separator_cadence"] = (
-                            self.run_walk_separator_cadence
-                        )
+                        cadence_data["run_walk_separator_cadence"] = self.run_walk_separator_cadence
                         cadence_data["total_readings"] = total_count
                         cadence_data["running_count"] = running_count
                         cadence_data["walking_count"] = walking_count
@@ -146,19 +139,17 @@ class BaseHandler(xml.sax.ContentHandler):
                         cadence_data["walking_pct"] = (
                             float(walking_count) / float(total_count) * 100.0
                         )
-                        cadence_data["idle_pct"] = (
-                            float(idle_count) / float(total_count) * 100.0
-                        )
+                        cadence_data["idle_pct"] = float(idle_count) / float(total_count) * 100.0
 
                         if running_count > 0:
-                            cadence_data["running_avg_cadence"] = float(
-                                running_steps
-                            ) / float(running_count)
+                            cadence_data["running_avg_cadence"] = float(running_steps) / float(
+                                running_count
+                            )
 
                         if walking_count > 0:
-                            cadence_data["walking_avg_cadence"] = float(
-                                walking_steps
-                            ) / float(walking_count)
+                            cadence_data["walking_avg_cadence"] = float(walking_steps) / float(
+                                walking_count
+                            )
         except Exception as e:
             print(f"Error: {e}")
 

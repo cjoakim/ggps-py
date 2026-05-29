@@ -5,7 +5,6 @@ from ggps.base_handler import BaseHandler
 
 
 class PathHandler(BaseHandler):
-
     def parse(self, filename):
         self.filename = filename
         self.handler_type = "path"

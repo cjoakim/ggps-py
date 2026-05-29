@@ -4,7 +4,6 @@ import ggps
 
 
 class UnitTestHelper(object):
-
     def __init__(self, handler):
         self.handler = handler
         self.data = handler.get_data()
@@ -38,9 +37,7 @@ class UnitTestHelper(object):
 
     def assert_trackpoint_count(self, expected):
         actual = len(self.data["trackpoints"])
-        print(
-            "assert_trackpoint_count; actual {}, expected: {}".format(actual, expected)
-        )
+        print("assert_trackpoint_count; actual {}, expected: {}".format(actual, expected))
         assert actual == expected
         assert actual == self.data["trackpoint_count"]
 
@@ -49,31 +46,19 @@ class UnitTestHelper(object):
 
     def assert_first_trackpoint(self, expected: dict):
         actual = self.data["trackpoints"][0]
-        print(
-            "assert_first_trackpoint; \n actual {}, \n expected: {}".format(
-                actual, expected
-            )
-        )
+        print("assert_first_trackpoint; \n actual {}, \n expected: {}".format(actual, expected))
         self.compare_attributes(expected, actual)
         assert actual == expected
 
     def assert_last_trackpoint(self, expected: dict):
         actual = self.data["trackpoints"][-1]
-        print(
-            "assert_last_trackpoint; \n actual {}, \n expected: {}".format(
-                actual, expected
-            )
-        )
+        print("assert_last_trackpoint; \n actual {}, \n expected: {}".format(actual, expected))
         self.compare_attributes(expected, actual)
         assert actual == expected
 
     def assert_trackpoint_at_index(self, expected: dict, index: int):
         actual = self.data["trackpoints"][index]
-        print(
-            "assert_trackpoint_at_index; \n actual {}, \n expected: {}".format(
-                actual, expected
-            )
-        )
+        print("assert_trackpoint_at_index; \n actual {}, \n expected: {}".format(actual, expected))
         self.compare_attributes(expected, actual)
         assert actual == expected
 
@@ -89,9 +74,7 @@ class UnitTestHelper(object):
             else:
                 if expected[key] != actual[key]:
                     print(
-                        "key {}: expected: {}, actual: {}".format(
-                            key, expected[key], actual[key]
-                        )
+                        "key {}: expected: {}, actual: {}".format(key, expected[key], actual[key])
                     )
 
     def assert_str(self):

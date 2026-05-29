@@ -69,9 +69,7 @@ def test_lorimer_avinger_tcx_file():
     helper.assert_last_trackpoint(expected_last_trackpoint())
     helper.assert_str()
 
-    assert (
-        handler.get_data()["stats"]["cadence_data"]["run_walk_separator_cadence"] == 151
-    )
+    assert handler.get_data()["stats"]["cadence_data"]["run_walk_separator_cadence"] == 151
 
     # test no-stats
     opts = dict()
@@ -85,6 +83,4 @@ def test_lorimer_avinger_tcx_file():
     opts["run_walk_separator_cadence"] = "bad value!"
     handler = ggps.TcxHandler(opts)
     handler.parse(filename)
-    assert (
-        handler.get_data()["stats"]["cadence_data"]["run_walk_separator_cadence"] == 150
-    )
+    assert handler.get_data()["stats"]["cadence_data"]["run_walk_separator_cadence"] == 150

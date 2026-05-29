@@ -5,7 +5,6 @@ from ggps.trackpoint import Trackpoint
 
 
 class TcxHandler(BaseHandler):
-
     root_tag = "TrainingCenterDatabase"
     tkpt_path = root_tag + "|Activities|Activity|Lap|Track|Trackpoint"
     tkpt_path_len = len(tkpt_path)
